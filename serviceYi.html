@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yvan Ibinga Digital Strategist & Webmaster</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #0f2044;
+    --navy-light: #162d5c;
+    --violet: #6c3fc8;
+    --violet-glow: #7c4fd8;
+    --violet-light: #9b6ef0;
+    --white: #f0f4ff;
+    --white-dim: rgba(240,244,255,0.7);
+    --accent: #4fc3f7;
+    --accent2: #a78bfa;
+    --glass: rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.08);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ── CURSEUR CUSTOM ── */
+  .cursor {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: var(--violet-light);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--violet-light);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.5;
+    transition: transform 0.25s cubic-bezier(.25,.46,.45,.94), width 0.3s, height 0.3s;
+  }
+  .cursor-ring.hover { width: 60px; height: 60px; opacity: 0.3; }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 60px;
+    backdrop-filter: blur(20px);
+    background: rgba(10,22,40,0.7);
+    border-bottom: 1px solid var(--glass-border);
+    transition: padding 0.4s;
+  }
+  nav.scrolled { padding: 14px 60px; }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nav-logo span {
+    display: inline-block;
+    width: 8px; height: 8px;
+    background: var(--violet-light);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--white-dim);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--violet-light);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: var(--violet);
+    color: var(--white) !important;
+    padding: 10px 24px;
+    border-radius: 100px;
+    font-weight: 500 !important;
+    letter-spacing: 0.03em !important;
+    text-transform: none !important;
+    transition: background 0.3s, transform 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--violet-glow) !important; transform: translateY(-1px); }
+  .nav-cta::after { display: none !important; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 60px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 80% 50%, rgba(108,63,200,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(79,195,247,0.08) 0%, transparent 60%),
+      linear-gradient(160deg, #0a1628 0%, #0f1e3a 50%, #0a1628 100%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(108,63,200,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(108,63,200,0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 720px; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(108,63,200,0.15);
+    border: 1px solid rgba(108,63,200,0.35);
+    color: var(--accent2);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border-radius: 100px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent2);
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-title .line { display: block; }
+  .hero-title .violet { color: var(--violet-light); }
+  .hero-title .accent { 
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(240,244,255,0.3);
+  }
+
+  .hero-desc {
+    font-size: 1.05rem;
+    color: var(--white-dim);
+    line-height: 1.75;
+    max-width: 520px;
+    margin-bottom: 48px;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .btn-primary {
+    background: var(--violet);
+    color: var(--white);
+    padding: 15px 36px;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    cursor: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--violet-light), var(--violet));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(108,63,200,0.4); }
+  .btn-primary:hover::before { opacity: 1; }
+  .btn-primary span { position: relative; z-index: 1; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--white-dim);
+    padding: 15px 36px;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.05); color: var(--white); border-color: rgba(255,255,255,0.3); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px; left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--white-dim);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeIn 1s 1.2s forwards;
+  }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--white-dim), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+
+  /* ── SECTIONS COMMUNES ── */
+  section { position: relative; z-index: 2; }
+  .section-inner { max-width: 1200px; margin: 0 auto; padding: 100px 60px; }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--violet-light);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .section-label::before {
+    content: '';
+    width: 30px; height: 1px;
+    background: var(--violet-light);
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .section-sub {
+    color: var(--white-dim);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.7;
+    max-width: 540px;
+  }
+
+  /* ── À PROPOS ── */
+  #apropos { background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 100%); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    margin-top: 60px;
+  }
+
+  .about-visual {
+    position: relative;
+  }
+  .about-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+  }
+  .about-card::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(ellipse at center, rgba(108,63,200,0.08), transparent 70%);
+    animation: rotate 12s linear infinite;
+  }
+  .about-avatar {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--violet), var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .about-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .about-role {
+    color: var(--violet-light);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+  }
+  .about-location {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--white-dim);
+    font-size: 0.85rem;
+    margin-bottom: 32px;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    position: relative;
+  }
+  .stat-item {
+    text-align: center;
+    padding: 20px 10px;
+    background: rgba(108,63,200,0.1);
+    border: 1px solid rgba(108,63,200,0.2);
+    border-radius: 16px;
+    position: relative;
+  }
+  .stat-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--violet-light);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--white-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .about-text h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+  .about-text p {
+    color: var(--white-dim);
+    font-weight: 300;
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .skills-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 32px;
+  }
+  .skill-tag {
+    background: rgba(108,63,200,0.12);
+    border: 1px solid rgba(108,63,200,0.25);
+    color: var(--accent2);
+    padding: 7px 16px;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+  .skill-tag:hover { background: rgba(108,63,200,0.25); transform: translateY(-2px); }
+
+  /* ── RÉALISATIONS ── */
+  #realisations { background: var(--navy-mid); }
+
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin: 40px 0 48px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    padding: 6px;
+    border-radius: 100px;
+    width: fit-content;
+  }
+  .tab-btn {
+    padding: 10px 28px;
+    border-radius: 100px;
+    border: none;
+    background: transparent;
+    color: var(--white-dim);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: none;
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+  .tab-btn.active {
+    background: var(--violet);
+    color: var(--white);
+    box-shadow: 0 4px 20px rgba(108,63,200,0.4);
+  }
+  .tab-btn:hover:not(.active) { color: var(--white); background: rgba(255,255,255,0.05); }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: grid; }
+
+  .grid-3 { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+
+  .project-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(.25,.46,.45,.94);
+    cursor: none;
+    position: relative;
+    group: true;
+  }
+  .project-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(108,63,200,0.35);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(108,63,200,0.2);
+  }
+
+  .card-thumb {
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-thumb-inner {
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    transition: transform 0.5s;
+  }
+  .project-card:hover .card-thumb-inner { transform: scale(1.1); }
+
+  .bg-infog { background: linear-gradient(135deg, #1a0a3c 0%, #2d1065 50%, #1a0533 100%); }
+  .bg-web { background: linear-gradient(135deg, #0a1f3c 0%, #0d3a6e 50%, #091828 100%); }
+  .bg-affiche { background: linear-gradient(135deg, #1c0a2e 0%, #3d1460 50%, #130820 100%); }
+
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,22,40,0.95), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+  }
+  .project-card:hover .card-overlay { opacity: 1; }
+  .overlay-link {
+    background: var(--violet);
+    color: var(--white);
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .card-body { padding: 24px; }
+  .card-category {
+    color: var(--violet-light);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .card-desc {
+    color: var(--white-dim);
+    font-size: 0.82rem;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+  .card-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .card-tag {
+    background: rgba(108,63,200,0.1);
+    border: 1px solid rgba(108,63,200,0.2);
+    color: var(--white-dim);
+    font-size: 0.7rem;
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+
+  /* ── CONTACT ── */
+  #contact { background: linear-gradient(180deg, var(--navy-mid) 0%, var(--navy) 100%); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-top: 60px;
+    align-items: start;
+  }
+
+  .contact-info h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+  .contact-info p {
+    color: var(--white-dim);
+    font-weight: 300;
+    line-height: 1.8;
+    margin-bottom: 40px;
+  }
+
+  .contact-links { display: flex; flex-direction: column; gap: 16px; }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--white);
+    transition: all 0.3s;
+  }
+  .contact-link:hover {
+    background: rgba(108,63,200,0.1);
+    border-color: rgba(108,63,200,0.35);
+    transform: translateX(4px);
+  }
+  .contact-link-icon {
+    width: 44px; height: 44px;
+    background: rgba(108,63,200,0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .contact-link-info { flex: 1; }
+  .contact-link-label { font-size: 0.72rem; color: var(--white-dim); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2px; }
+  .contact-link-value { font-size: 0.9rem; font-weight: 500; }
+
+  .contact-form { display: flex; flex-direction: column; gap: 20px; }
+
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-label { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em; color: var(--white-dim); }
+  .form-input, .form-textarea {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 15px 20px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    outline: none;
+    transition: all 0.3s;
+    resize: none;
+  }
+  .form-input:focus, .form-textarea:focus {
+    border-color: rgba(108,63,200,0.5);
+    background: rgba(108,63,200,0.05);
+    box-shadow: 0 0 0 3px rgba(108,63,200,0.1);
+  }
+  .form-input::placeholder, .form-textarea::placeholder { color: rgba(240,244,255,0.3); }
+  .form-textarea { height: 140px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .btn-send {
+    background: var(--violet);
+    color: var(--white);
+    padding: 16px 40px;
+    border-radius: 100px;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    transition: all 0.3s;
+  }
+  .btn-send:hover { background: var(--violet-glow); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(108,63,200,0.4); }
+
+  /* ── BLOG ── */
+  #blog { background: var(--navy); }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 24px;
+    margin-top: 60px;
+  }
+
+  .blog-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: none;
+    transition: all 0.4s;
+  }
+  .blog-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(108,63,200,0.35);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+
+  .blog-card.featured { grid-row: span 2; }
+
+  .blog-thumb {
+    position: relative;
+    overflow: hidden;
+  }
+  .blog-card.featured .blog-thumb { height: 280px; }
+  .blog-thumb { height: 160px; }
+
+  .blog-thumb-inner {
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    transition: transform 0.5s;
+  }
+  .blog-card:hover .blog-thumb-inner { transform: scale(1.08); }
+  .bg-seo { background: linear-gradient(135deg, #0a2440 0%, #0e3d6b 100%); }
+  .bg-maint { background: linear-gradient(135deg, #1a0830 0%, #3c1465 100%); }
+  .bg-comm { background: linear-gradient(135deg, #0a2030 0%, #124565 100%); }
+  .bg-dev { background: linear-gradient(135deg, #0d1a30 0%, #1a3a60 100%); }
+  .bg-ads { background: linear-gradient(135deg, #1a0a28 0%, #42106b 100%); }
+
+  .blog-body { padding: 28px; }
+  .blog-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .blog-cat {
+    background: rgba(108,63,200,0.15);
+    border: 1px solid rgba(108,63,200,0.25);
+    color: var(--violet-light);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+  }
+  .blog-date { color: var(--white-dim); font-size: 0.75rem; }
+
+  .blog-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .blog-card.featured .blog-title { font-size: 1.4rem; }
+  .blog-title { font-size: 1rem; }
+
+  .blog-excerpt {
+    color: var(--white-dim);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+  .blog-link {
+    color: var(--violet-light);
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.3s;
+  }
+  .blog-link:hover { gap: 10px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy-mid);
+    border-top: 1px solid var(--glass-border);
+    padding: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+  }
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+  .footer-copy { color: var(--white-dim); font-size: 0.82rem; font-weight: 300; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a {
+    color: var(--white-dim);
+    font-size: 0.82rem;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--violet-light); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.5; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(0.7); }
+  }
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s cubic-bezier(.25,.46,.45,.94), transform 0.7s cubic-bezier(.25,.46,.45,.94);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ── MOBILE MENU ── */
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: none;
+    padding: 8px;
+  }
+  .menu-toggle span {
+    width: 24px; height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: all 0.3s;
+    display: block;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    nav.scrolled { padding: 12px 24px; }
+    .nav-links { display: none; gap: 20px; flex-direction: column; position: fixed; top: 72px; left: 0; right: 0; background: rgba(10,22,40,0.98); backdrop-filter: blur(20px); padding: 30px 24px; border-bottom: 1px solid var(--glass-border); z-index: 99; }
+    .nav-links.open { display: flex; }
+    .menu-toggle { display: flex; }
+    .section-inner { padding: 70px 24px; }
+    #hero { padding: 120px 24px 80px; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .blog-grid { grid-template-columns: 1fr; }
+    .blog-card.featured { grid-row: auto; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 20px; text-align: center; padding: 40px 24px; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+    .tabs { flex-wrap: wrap; border-radius: 20px; width: 100%; }
+    .tab-btn { flex: 1; text-align: center; }
+    .stats-row { grid-template-columns: repeat(3, 1fr); }
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+  }
+
+  .c-wrap { position: relative; margin-top: 8px; }
+  .c-overflow { overflow: hidden; border-radius: 16px; }
+  .c-track { display: flex; gap: 24px; transition: transform 0.5s cubic-bezier(.25,.46,.45,.94); }
+  .c-track .project-card { flex: 0 0 calc(33.333% - 16px); min-width: calc(33.333% - 16px); cursor: pointer; }
+  .c-btn { position: absolute; top: 90px; width: 46px; height: 46px; border-radius: 50%; background: rgba(108,63,200,0.85); border: 1px solid rgba(108,63,200,0.5); color: #f0f4ff; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; z-index: 5; }
+  .c-btn:hover { background: #6c3fc8; }
+  .c-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+  .c-btn.prev { left: -14px; }
+  .c-btn.next { right: -14px; }
+  .c-dots { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
+  .c-dot { width: 8px; height: 8px; border-radius: 100px; border: none; background: rgba(255,255,255,0.2); cursor: pointer; transition: all 0.35s; padding: 0; }
+  .c-dot.on { width: 28px; background: var(--violet-light); }
+  #lb { position: fixed; inset: 0; z-index: 9000; background: rgba(5,10,20,0.96); backdrop-filter: blur(16px); display: none; opacity: 0; transition: opacity 0.3s; }
+  #lb.open { display: flex; opacity: 1; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
+  #lb-close { position: absolute; top: 24px; right: 24px; background: rgba(108,63,200,0.25); border: 1px solid rgba(108,63,200,0.4); color: #f0f4ff; width: 44px; height: 44px; border-radius: 50%; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
+  #lb-close:hover { background: #6c3fc8; }
+  .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(108,63,200,0.25); border: 1px solid rgba(108,63,200,0.4); color: #f0f4ff; width: 54px; height: 54px; border-radius: 50%; font-size: 2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
+  .lb-nav:hover { background: #6c3fc8; }
+  #lb-prev { left: 24px; }
+  #lb-next { right: 24px; }
+  #lb-img { max-width: 82vw; max-height: 75vh; object-fit: contain; border-radius: 14px; box-shadow: 0 30px 80px rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.08); display: block; }
+  #lb-placeholder { max-width: 82vw; max-height: 75vh; min-width: 320px; min-height: 220px; border-radius: 14px; box-shadow: 0 30px 80px rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 5rem; }
+  #lb-info { text-align: center; max-width: 600px; padding: 0 20px; }
+  #lb-title { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; }
+  #lb-desc { color: rgba(240,244,255,0.7); font-size: 0.88rem; font-weight: 300; line-height: 1.6; }
+  #lb-count { margin-top: 10px; color: rgba(240,244,255,0.35); font-size: 0.75rem; }
+  @media (max-width: 900px) { .c-track .project-card { flex: 0 0 100%; min-width: 100%; } .c-btn.prev { left: 2px; } .c-btn.next { right: 2px; } }
+
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ── NAVBAR ── -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <span></span>Yvan Ibinga
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#apropos">À propos</a></li>
+    <li><a href="#realisations">Réalisations</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#contact" class="nav-cta">Me contacter</a></li>
+  </ul>
+  <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Disponible pour des missions freelance</div>
+    <h1 class="hero-title">
+      <span class="line">Webmaster &</span>
+      <span class="line violet">Growth Hacker</span>
+      <span class="line accent">Libreville, Gabon</span>
+    </h1>
+    <p class="hero-desc">
+      Je conçois des expériences digitales qui convertissent,  du site vitrine SEO-Optimisé 
+      aux stratégies de contenu qui génèrent de la croissance réelle pour votre business.
+    </p>
+    <div class="hero-actions">
+      <a href="#realisations" class="btn-primary">
+        <span>Voir mes réalisations</span>
+        <span>→</span>
+      </a>
+      <a href="#contact" class="btn-ghost">Travailler ensemble</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroller</span>
+  </div>
+</section>
+
+<!-- ── À PROPOS ── -->
+<section id="apropos">
+  <div class="section-inner">
+    <div class="section-label reveal">À propos</div>
+    <h2 class="section-title reveal reveal-delay-1">Qui suis-je ?</h2>
+    <p class="section-sub reveal reveal-delay-2">Un profil hybride au service de votre croissance digitale.</p>
+
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-card">
+          <div class="about-avatar">YI</div>
+          <div class="about-name">Yvan Ibinga</div>
+          <div class="about-role">Webmaster| Growth Hacker | Consultant Digital</div>
+          <div class="about-location"> Libreville, Gabon</div>
+          <div class="stats-row">
+            <div class="stat-item">
+              <span class="stat-number">4+</span>
+              <span class="stat-label">Ans d'exp.</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">6+</span>
+              <span class="stat-label">Projets</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">5+</span>
+              <span class="stat-label">Clients</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-text">
+        <h3 class="reveal">Un profil hybride,<br>c'est mon avantage.</h3>
+        <p class="reveal reveal-delay-1">
+          Je ne suis pas seulement développeur web, ni uniquement marketeur. 
+          Je suis les deux. Cette double compétence me permet de construire des solutions 
+          digitales qui sont à la fois techniquement solides et stratégiquement efficaces.
+        </p>
+        <p class="reveal reveal-delay-2">
+          Basé à Libreville, je comprends les spécificités du marché gabonais et africain. 
+          Je travaille avec des PME, des indépendants et des marques qui veulent une présence 
+          digitale qui dépasse la simple vitrine.
+        </p>
+        <div class="skills-tags reveal reveal-delay-3">
+          <span class="skill-tag">SEO On-page</span>
+          <span class="skill-tag">WordPress</span>
+          <span class="skill-tag">Facebook Ads</span>
+          <span class="skill-tag">Google Ads</span>
+          <span class="skill-tag">Canva Pro</span>
+          <span class="skill-tag">Photoshop</span>
+          <span class="skill-tag">Illustrator</span>
+          <span class="skill-tag">Community Management</span>
+          <span class="skill-tag">Email Marketing</span>
+          <span class="skill-tag">Brevo</span>
+          <span class="skill-tag">Systeme.io</span>
+          <span class="skill-tag">Analytics</span>
+          <span class="skill-tag">Laravel</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── RÉALISATIONS ── -->
+<section id="realisations">
+  <div class="section-inner">
+    <div class="section-label reveal">Portfolio YI</div>
+    <h2 class="section-title reveal reveal-delay-1">Mes Réalisations</h2>
+    <p class="section-sub reveal reveal-delay-2">Design, web et communication digitale, chaque projet, une solution sur mesure.</p>
+
+    <div class="tabs reveal reveal-delay-3">
+      <button class="tab-btn active" data-tab="infographies"> Infographies</button>
+      <button class="tab-btn" data-tab="sites"> Sites Internet</button>
+      <button class="tab-btn" data-tab="affiches"> Affiches Canva</button>
+    </div>
+
+    <!-- Infographies — Carrousel -->
+    <div class="tab-panel active" id="tab-infographies" style="display:block;">
+
+      <!-- LIGHTBOX -->
+      <div id="lb">
+        <button id="lb-close" onclick="lbClose()">✕</button>
+        <button class="lb-nav" id="lb-prev" onclick="lbNav(-1)">‹</button>
+        <button class="lb-nav" id="lb-next" onclick="lbNav(1)">›</button>
+        <div id="lb-placeholder"></div>
+        <div id="lb-info">
+          <div id="lb-title"></div>
+          <div id="lb-desc"></div>
+          <div id="lb-count"></div>
+        </div>
+      </div>
+
+      <div class="c-wrap">
+        <div class="c-overflow">
+          <div class="c-track" id="ct">
+            <div class="project-card" onclick="lbOpen(0)" data-title="Guide SEO Gabon 2024" data-desc="Infographie illustrant les 10 étapes clés pour optimiser un site web pour le marché gabonais." data-src="images/classy.jpg">
+              <div class="card-thumb" style="background:linear-gradient(135deg,#1a0a3c,#2d1065,#1a0533);padding:0;overflow:hidden;"><img src="images/classy.jpg" alt="Guide SEO Gabon 2024" style="width:100%;height:100%;object-fit:cover;display:block;"><div class="card-overlay"><a class="overlay-link"> Voir en grand</a></div></div>
+              <div class="card-body"><div class="card-category">Infographie</div><div class="card-title">Den Delices Crunchy Delices Fruit </div><div class="card-desc">bol garni de fruits frais (framboises, myrtilles, mûres, papaye, amandes)</div><div class="card-tags"><span class="card-tag">Graphiste</span><span class="card-tag">Canva</span><span class="card-tag">Photoshop</span></div></div>
+            </div>
+            <div class="project-card" onclick="lbOpen(1)" data-title="Social Media Stats Afrique" data-desc="Données visuelles sur l'usage des réseaux sociaux en Afrique centrale et leurs tendances." data-src="images/paques.jpg">
+              <div class="card-thumb" style="background:linear-gradient(135deg,#0d2a1a,#1a5c2a);padding:0;overflow:hidden;"><img src="images/paques.jpg" alt="Social Media Stats Afrique" style="width:100%;height:100%;object-fit:cover;display:block;"><div class="card-overlay"><a class="overlay-link"> Voir en grand</a></div></div>
+              <div class="card-body"><div class="card-category">Infographie</div><div class="card-title">Affiche Pâques Toyota</div><div class="card-desc">simple et directe (Un visuel festif célébrant Pâques avec des véhicules Toyota).</div><div class="card-tags"><span class="card-tag">Illustrator</span><span class="card-tag">Photoshop</span></div></div>
+            </div>
+            <div class="project-card" onclick="lbOpen(2)" data-title="Checklist Marketing Digital" data-desc="Outil visuel pour les PME gabonaises souhaitant structurer leur présence en ligne." data-src="images/crustacés.png">
+              <div class="card-thumb" style="background:linear-gradient(135deg,#2a1a0d,#5c3a1a);padding:0;overflow:hidden;"><img src="images/crustacés.png" alt="Checklist Marketing Digital" style="width:100%;height:100%;object-fit:cover;display:block;"><div class="card-overlay"><a class="overlay-link"> Voir en grand</a></div></div>
+              <div class="card-body"><div class="card-category">Infographie</div><div class="card-title">Affiche Snacks Crunch Blast</div><div class="card-desc">simple et directe (Une affiche dynamique mettant en avant des snacks avec un style cartoon).</div><div class="card-tags"><span class="card-tag">Photoshop</span><span class="card-tag">Illustrator</span></div></div>
+            </div>
+            <div class="project-card" onclick="lbOpen(3)" data-title="Tunnel de Conversion" data-desc="Représentation visuelle d'un funnel de vente optimisé avec les étapes clés de conversion." data-src="images/frais.jpg">
+              <div class="card-thumb" style="background:linear-gradient(135deg,#0a0a2a,#202080);padding:0;overflow:hidden;"><img src="images/frais.jpg" alt="Tunnel de Conversion" style="width:100%;height:100%;object-fit:cover;display:block;"><div class="card-overlay"><a class="overlay-link"> Voir en grand</a></div></div>
+              <div class="card-body"><div class="card-category">Infographie</div><div class="card-title">Affiche Yaourt Parfait</div><div class="card-desc">simple et directe (Une affiche gourmande et fraîche pour promouvoir un yaourt fruité)..</div><div class="card-tags"><span class="card-tag">Illustrator</span><span class="card-tag">Photoshop</span></div></div>
+            </div>
+            <div class="project-card" onclick="lbOpen(4)" data-title="Comparatif Plateformes Ads" data-desc="Comparaison visuelle entre Google Ads, Facebook Ads et TikTok Ads pour le marché gabonais." data-src="images/enjoy.jpg">
+              <div class="card-thumb" style="background:linear-gradient(135deg,#1a0a0a,#802020);padding:0;overflow:hidden;"><img src="images/enjoy.jpg" alt="Comparatif Plateformes Ads" style="width:100%;height:100%;object-fit:cover;display:block;"><div class="card-overlay"><a class="overlay-link"> Voir en grand</a></div></div>
+              <div class="card-body"><div class="card-category">Infographie</div><div class="card-title">Comparatif Plateformes Ads</div><div class="card-desc">Google Ads vs Facebook Ads vs TikTok Ads au Gabon.</div><div class="card-tags"><span class="card-tag">Publicité</span><span class="card-tag">Data Viz</span></div></div>
+            </div>
+            <div class="project-card" onclick="lbOpen(5)" data-title="Stratégie Community Management" data-desc="Infographie sur les meilleures pratiques de community management pour le marché africain." data-src="images/mitsubishi.jpg">
+              <div class="card-thumb" style="background:linear-gradient(135deg,#0a1e2e,#1a4060);padding:0;overflow:hidden;"><img src="images/mitsubishi.jpg" alt="Stratégie Community Management" style="width:100%;height:100%;object-fit:cover;display:block;"><div class="card-overlay"><a class="overlay-link"> Voir en grand</a></div></div>
+              <div class="card-body"><div class="card-category">Infographie</div><div class="card-title">Affiche Pajero Mitsuboshi</div><div class="card-desc">Affiche illustrant un pajero mitsubishi pour le marché africain.</div><div class="card-tags"><span class="card-tag">Réseaux Sociaux</span><span class="card-tag">Canva</span></div></div>
+            </div>
+            <div class="project-card" onclick="lbOpen(5)" data-title="Stratégie Community Management" data-desc="Infographie sur les meilleures pratiques de community management pour le marché africain." data-src="images/friends.png">
+              <div class="card-thumb" style="background:linear-gradient(135deg,#0a1e2e,#1a4060);padding:0;overflow:hidden;"><img src="images/friends.png" alt="Stratégie Community Management" style="width:100%;height:100%;object-fit:cover;display:block;"><div class="card-overlay"><a class="overlay-link"> Voir en grand</a></div></div>
+              <div class="card-body"><div class="card-category">Infographie</div><div class="card-title">Stratégie Community Mgmt</div><div class="card-desc">Meilleures pratiques de community management pour le marché africain.</div><div class="card-tags"><span class="card-tag">Réseaux Sociaux</span><span class="card-tag">Canva</span></div></div>
+            </div>
+            <div class="project-card" onclick="lbOpen(5)" data-title="Stratégie Community Management" data-desc="Infographie sur les meilleures pratiques de community management pour le marché africain." data-src="images/DENCHOCO.png">
+              <div class="card-thumb" style="background:linear-gradient(135deg,#0a1e2e,#1a4060);padding:0;overflow:hidden;"><img src="images/DENCHOCO.png" alt="Stratégie Community Management" style="width:100%;height:100%;object-fit:cover;display:block;"><div class="card-overlay"><a class="overlay-link"> Voir en grand</a></div></div>
+              <div class="card-body"><div class="card-category">Infographie</div><div class="card-title">Stratégie Community Mgmt</div><div class="card-desc">Meilleures pratiques de community management pour le marché africain.</div><div class="card-tags"><span class="card-tag">Réseaux Sociaux</span><span class="card-tag">Canva</span></div></div>
+            </div>
+          </div>
+        </div>
+        <button class="c-btn prev" id="cp" onclick="cNav(-1)">‹</button>
+        <button class="c-btn next" id="cn" onclick="cNav(1)">›</button>
+      </div>
+      <div class="c-dots" id="cd"></div>
+    </div>
+
+    <!-- Sites internet -->
+    <div class="tab-panel grid-2" id="tab-sites">
+      <div class="project-card reveal">
+        <div class="card-thumb bg-web" style="height:220px">
+          <div class="card-thumb-inner"></div>
+          <div class="card-overlay">
+            <a href="https://profschool-gab.kesug.com/online/" class="overlay-link">Voir le site +</a>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-category">IKENDJA-SCHOOL</div>
+          <div class="card-title">Profschool | Transformez votre savoir</div>
+          <div class="card-desc">Apprenez à votre rythme, explorez sans limites nos cours, pour un apprentissage de qualité, ainsi développer vos compétences et améliorer vos performances.</div>
+          <div class="card-tags">
+            <span class="card-tag">Formateurs</span>
+            <span class="card-tag">Cours de base</span>
+            <span class="card-tag">Communication</span>
+          </div>
+        </div>
+      </div>
+     <div class="project-card reveal reveal-delay-2">
+        <div class="card-thumb bg-web" style="background:linear-gradient(135deg,#1a1030,#2a2060);height:220px">
+          <div class="card-thumb-inner"></div>
+          <div class="card-overlay">
+            <a href="git@github.com:yvanwall/visiteurs-app.git" class="overlay-link">Voir le site +</a>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-category">GESTION DES VISITEURS LARAVEL</div>
+          <div class="card-title">Site Institutionnel ONG CNA</div>
+          <div class="card-desc">Développement et gestion des visiteurs au sein de l'ONG gabonaise.</div>
+          <div class="card-tags">
+            <span class="card-tag">Php</span>
+            <span class="card-tag">Local</span>
+            <span class="card-tag">Template</span>
+          </div>
+        </div>
+      </div>
+   <div class="project-card reveal reveal-delay-3">
+        <div class="card-thumb bg-web" style="background:linear-gradient(135deg,#0d2030,#1a4055);height:220px">
+          <div class="card-thumb-inner"></div>
+          <div class="card-overlay">
+            <a href="https://matsang.kesug.com/online/" class="overlay-link">Voir le site +</a>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-category">MATSANG</div>
+          <div class="card-title">L'info qui percute</div>
+          <div class="card-desc">Bienvenue sur notre site dédiée à l'actualité Ici, nous partageons les nouvelles les plus importantes qui touchent notre quotidien. </div>
+          <div class="card-tags">
+            <span class="card-tag">Actualités</span>
+            <span class="card-tag">Economie</span>
+            <span class="card-tag">Santé</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card reveal reveal-delay-3">
+        <div class="card-thumb bg-web" style="background:linear-gradient(135deg,#0d2030,#1a4055);height:220px">
+          <div class="card-thumb-inner"></div>
+          <div class="card-overlay">
+            <a href="https://nexusware.free.nf/online/" class="overlay-link">Voir le site →</a>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-category">NEXUSWARE</div>
+          <div class="card-title">Maintenance Réseaux & Informatique</div>
+          <div class="card-desc">Ensemble Améliorons votre parc informatique let's Go !</div>
+          <div class="card-tags">
+            <span class="card-tag">Maintenance</span>
+            <span class="card-tag">Réseaux</span>
+            <span class="card-tag">Informatique</span>
+          </div>
+        </div>
+      </div>
+        <div class="project-card reveal reveal-delay-3">
+        <div class="card-thumb bg-web" style="background:linear-gradient(135deg,#0d2030,#1a4055);height:220px">
+          <div class="card-thumb-inner"></div>
+          <div class="card-overlay">
+            <a href="https://eden-ludiv.kesug.com/online/" class="overlay-link">Voir le site +</a>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-category">EDEN LUDIV</div>
+          <div class="card-title">E-commerce & site</div>
+          <div class="card-desc">Luxe et tendances pour femmes</div>
+          <div class="card-tags">
+            <span class="card-tag">Api </span>
+            <span class="card-tag">prix compte</span>
+            <span class="card-tag">filtre</span>
+          </div>
+        </div>
+      </div>
+       <div class="project-card reveal reveal-delay-1">
+        <div class="card-thumb bg-web" style="background:linear-gradient(135deg,#0a2040,#0d4a3a);height:220px">
+          <div class="card-thumb-inner"></div>
+          <div class="card-overlay">
+            <a href="https://mngameeden13.systeme.io/audit-seo-gratuit" class="overlay-link">Voir le site →</a>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-category">Landing Page & Tunnel</div>
+          <div class="card-title">Audit SEO Gratuit — Funnel Systeme.io</div>
+          <div class="card-desc">Tunnel de conversion complet avec landing page, page de remerciement et séquence email automatisée via Brevo + Zapier.</div>
+          <div class="card-tags">
+            <span class="card-tag">Systeme.io</span>
+            <span class="card-tag">Brevo</span>
+            <span class="card-tag">Zapier</span>
+            <span class="card-tag">SEO</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Affiches Canva -->
+    <div class="tab-panel grid-3" id="tab-affiches">
+      <div class="project-card reveal">
+        <div class="card-thumb bg-affiche">
+          <div class="card-thumb-inner"></div>
+          <div class="card-overlay">
+            <a href="#" class="overlay-link">Voir l'affiche +</a>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-category">Affiche Événementielle</div>
+          <div class="card-title">Forum Digital Gabon 2024</div>
+          <div class="card-desc">Affiche promotionnelle pour un événement tech et digital à Libreville.</div>
+          <div class="card-tags">
+            <span class="card-tag">Canva</span>
+            <span class="card-tag">Événement</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card reveal reveal-delay-1">
+        <div class="card-thumb bg-affiche" style="background:linear-gradient(135deg,#0a1e2e,#1a4060)">
+          <div class="card-thumb-inner"></div>
+          <div class="card-overlay">
+            <a href="#" class="overlay-link">Voir l'affiche +</a>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-category">Post Réseaux Sociaux</div>
+          <div class="card-title">Campagne Branding Business-Gab</div>
+          <div class="card-desc">Série de visuels cohérents pour renforcer l'identité de la page auto sur Facebook.</div>
+          <div class="card-tags">
+            <span class="card-tag">Branding</span>
+            <span class="card-tag">Canva</span>
+            <span class="card-tag">Facebook</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card reveal reveal-delay-2">
+        <div class="card-thumb bg-affiche" style="background:linear-gradient(135deg,#1a1040,#3a1a70)">
+          <div class="card-thumb-inner"></div>
+          <div class="card-overlay">
+            <a href="#" class="overlay-link">Voir l'affiche +</a>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-category">Kit Visuel</div>
+          <div class="card-title">Charte Graphique ONG CNA</div>
+          <div class="card-desc">Création d'un kit visuel complet — logo, couleurs, templates — pour l'identité digitale de l'ONG.</div>
+          <div class="card-tags">
+            <span class="card-tag">Illustrator</span>
+            <span class="card-tag">Branding</span>
+            <span class="card-tag">Canva</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BLOG ── -->
+<section id="blog">
+  <div class="section-inner">
+    <div class="section-label reveal">Ressources</div>
+    <h2 class="section-title reveal reveal-delay-1">Le Blog</h2>
+    <p class="section-sub reveal reveal-delay-2">Conseils pratiques en SEO, maintenance web, marketing digital et communication.</p>
+
+    <div class="blog-grid">
+      <div class="blog-card featured reveal">
+        <div class="blog-thumb bg-seo" style="height:280px">
+          <div class="blog-thumb-inner"></div>
+        </div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-cat">SEO</span>
+            <span class="blog-date">15 Mai 2025</span>
+          </div>
+          <div class="blog-title" style="font-size:1.4rem">Référencement naturel au Gabon : les 7 erreurs qui coulent votre site et comment les corriger</div>
+          <div class="blog-excerpt">La plupart des sites gabonais commettent les mêmes erreurs SEO. Absence de balises méta, contenu dupliqué, vitesse de chargement catastrophique sur mobile... Découvrez comment auditer votre site et grimper dans les résultats Google.</div>
+          <a href="#" class="blog-link">Lire l'article <span>→</span></a>
+        </div>
+      </div>
+
+      <div class="blog-card reveal reveal-delay-1">
+        <div class="blog-thumb bg-maint">
+          <div class="blog-thumb-inner" style="font-size:2.5rem"></div>
+        </div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-cat">Maintenance</span>
+            <span class="blog-date">2 Mai 2025</span>
+          </div>
+          <div class="blog-title">Maintenance WordPress : la checklist mensuelle indispensable</div>
+          <div class="blog-excerpt">Mises à jour, sauvegardes, sécurité... Ce que vous devez faire chaque mois pour éviter le crash.</div>
+          <a href="#" class="blog-link">Lire +</a>
+        </div>
+      </div>
+
+      <div class="blog-card reveal reveal-delay-2">
+        <div class="blog-thumb bg-comm">
+          <div class="blog-thumb-inner" style="font-size:2.5rem"></div>
+        </div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-cat">Communication</span>
+            <span class="blog-date">22 Avr 2025</span>
+          </div>
+          <div class="blog-title">Community Management : comment créer du contenu qui engage vraiment</div>
+          <div class="blog-excerpt">Storytelling, calendrier éditorial, formats qui performent en Afrique centrale.</div>
+          <a href="#" class="blog-link">Lire +</a>
+        </div>
+      </div>
+
+      <div class="blog-card reveal reveal-delay-1">
+        <div class="blog-thumb bg-dev">
+          <div class="blog-thumb-inner" style="font-size:2.5rem"></div>
+        </div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-cat">Web</span>
+            <span class="blog-date">10 Avr 2025</span>
+          </div>
+          <div class="blog-title">Vitesse de chargement : l'obsession SEO que les PME gabonaises ignorent</div>
+          <div class="blog-excerpt">Core Web Vitals, optimisation d'images, hébergement local... tout ce qui compte pour Google.</div>
+          <a href="#" class="blog-link">Lire +</a>
+        </div>
+      </div>
+
+      <div class="blog-card reveal reveal-delay-2">
+        <div class="blog-thumb bg-ads">
+          <div class="blog-thumb-inner" style="font-size:2.5rem"></div>
+        </div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-cat">Publicité</span>
+            <span class="blog-date">28 Mar 2025</span>
+          </div>
+          <div class="blog-title">Facebook Ads vs Google Ads : lequel choisir pour votre business à Libreville ?</div>
+          <div class="blog-excerpt">Comparaison concrète basée sur des campagnes réelles au Gabon. Budget, audience, résultats.</div>
+          <a href="#" class="blog-link">Lire +</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-label reveal">Contact</div>
+    <h2 class="section-title reveal reveal-delay-1">Démarrons un projet</h2>
+    <p class="section-sub reveal reveal-delay-2">Disponible pour des missions freelance, consultations et partenariats à Libreville et à distance.</p>
+
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3 class="reveal">Parlons de votre<br>projet digital.</h3>
+        <p class="reveal reveal-delay-1">
+          Que vous ayez besoin d'un site web, d'une stratégie SEO, 
+          de campagnes publicitaires ou d'un accompagnement en communication digitale, 
+          je suis là pour vous aider à atteindre vos objectifs.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:y.ibinga@bmacc.ga" class="contact-link reveal">
+            <div class="contact-link-icon"></div>
+            <div class="contact-link-info">
+              <div class="contact-link-label">Email professionnel</div>
+              <div class="contact-link-value">y.ibinga@bmacc.ga</div>
+            </div>
+            <span>→</span>
+          </a>
+          <a href="#" class="contact-link reveal reveal-delay-1">
+            <div class="contact-link-icon"></div>
+            <div class="contact-link-info">
+              <div class="contact-link-label">LinkedIn</div>
+              <div class="contact-link-value">Yvan Ibinga</div>
+            </div>
+            <span>→</span>
+          </a>
+          <a href="#" class="contact-link reveal reveal-delay-2">
+            <div class="contact-link-icon"></div>
+            <div class="contact-link-info">
+              <div class="contact-link-label">Localisation</div>
+              <div class="contact-link-value">Libreville, Gabon</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-form reveal">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Prénom</label>
+            <input type="text" class="form-input" placeholder="....">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nom</label>
+            <input type="text" class="form-input" placeholder="....">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" placeholder="votre@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Sujet</label>
+          <input type="text" class="form-input" placeholder="Audit SEO, Site web, Réseaux sociaux...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Votre message</label>
+          <textarea class="form-textarea" placeholder="Décrivez votre projet en quelques lignes..."></textarea>
+        </div>
+        <button class="btn-send" onclick="sendMsg()">
+          <span>Envoyer le message</span>
+          <span id="sendIcon">→</span>
+        </button>
+        <div id="formSuccess" style="display:none;color:var(--accent2);font-size:0.85rem;margin-top:12px;padding:12px 20px;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);border-radius:12px;">
+           Message envoyé ! Je vous réponds dans les 24h.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">Yvan Ibinga <span style="color:var(--violet-light)">•</span></div>
+  <div class="footer-copy">© 2025  Webmaster & Growth Hacker | Libreville, Gabon</div>
+  <div class="footer-links">
+    <a href="#apropos">À propos</a>
+    <a href="#realisations">Portfolio</a>
+    <a href="#blog">Blog</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+// ── CURSEUR ──
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  cursor.style.left = mouseX - 5 + 'px';
+  cursor.style.top = mouseY - 5 + 'px';
+});
+
+function animateRing() {
+  ringX += (mouseX - ringX - 18) * 0.12;
+  ringY += (mouseY - ringY - 18) * 0.12;
+  ring.style.left = ringX + 'px';
+  ring.style.top = ringY + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+document.querySelectorAll('a, button, .project-card, .blog-card, .contact-link').forEach(el => {
+  el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+  el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+});
+
+// ── NAVBAR SCROLL ──
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ── MOBILE MENU ──
+const toggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+toggle.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+});
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => navLinks.classList.remove('open'));
+});
+
+// ── TABS RÉALISATIONS ──
+const tabs = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('.tab-panel');
+
+tabs.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.tab;
+    tabs.forEach(t => t.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + target).classList.add('active');
+  });
+});
+
+// ── SCROLL REVEAL ──
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+revealEls.forEach(el => observer.observe(el));
+
+// ── FORMULAIRE ──
+function sendMsg() {
+  const btn = document.querySelector('.btn-send');
+  const icon = document.getElementById('sendIcon');
+  const success = document.getElementById('formSuccess');
+  icon.textContent = '⏳';
+  btn.disabled = true;
+  setTimeout(() => {
+    icon.textContent = '✓';
+    success.style.display = 'block';
+    setTimeout(() => { icon.textContent = '→'; btn.disabled = false; }, 3000);
+  }, 1200);
+}
+
+// ── SMOOTH ACTIVE NAV ──
+const sections = document.querySelectorAll('section[id]');
+const navAnchors = document.querySelectorAll('.nav-links a');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 100) current = s.getAttribute('id');
+  });
+  navAnchors.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current
+      ? 'var(--white)' : '';
+  });
+});
+
+// ── COUNTER ANIMATION ──
+function animateCounter(el, target) {
+  let count = 0;
+  const step = target / 40;
+  const timer = setInterval(() => {
+    count += step;
+    if (count >= target) { el.textContent = target + '+'; clearInterval(timer); }
+    else el.textContent = Math.floor(count) + '+';
+  }, 40);
+}
+
+const statsObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.stat-number').forEach(el => {
+        const val = parseInt(el.textContent);
+        animateCounter(el, val);
+      });
+      statsObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+const statsRow = document.querySelector('.stats-row');
+if (statsRow) statsObserver.observe(statsRow);
+
+// ── CARROUSEL INFOGRAPHIES ──
+(function(){
+  const slides = Array.from(document.querySelectorAll('#ct .project-card'));
+  const total  = slides.length;
+  const track  = document.getElementById('ct');
+  const dotsEl = document.getElementById('cd');
+  const btnP   = document.getElementById('cp');
+  const btnN   = document.getElementById('cn');
+  let cur = 0;
+
+  function perView(){ return window.innerWidth<=768?1:window.innerWidth<=1100?2:3; }
+
+  function buildDots(){
+    dotsEl.innerHTML='';
+    for(let i=0;i<total;i++){
+      const d=document.createElement('button');
+      d.className='c-dot'+(i===0?' on':'');
+      d.onclick=()=>go(i);
+      dotsEl.appendChild(d);
+    }
+  }
+
+  function update(){
+    const p=perView(), gap=24;
+    const w=(document.getElementById('co-infog')||track.parentElement).offsetWidth;
+    const sw=(w-gap*(p-1))/p;
+    slides.forEach(s=>{s.style.flex='0 0 '+sw+'px';s.style.minWidth=sw+'px';});
+    track.style.gap=gap+'px';
+    const max=Math.max(0,total-p);
+    if(cur>max)cur=max;
+    track.style.transform='translateX(-'+(cur*(sw+gap))+'px)';
+    btnP.disabled=cur===0;
+    btnN.disabled=cur>=max;
+    dotsEl.querySelectorAll('.c-dot').forEach((d,i)=>{
+      d.classList.toggle('on',i===cur);
+    });
+  }
+
+  function go(i){ cur=Math.min(Math.max(i,0),Math.max(0,total-perView())); update(); }
+  window.cNav=function(d){ go(cur+d); };
+
+  buildDots(); update();
+  window.addEventListener('resize',update);
+
+  // swipe mobile
+  let tx=0;
+  track.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+  track.addEventListener('touchend',e=>{const d=tx-e.changedTouches[0].clientX;if(Math.abs(d)>40)d>0?cNav(1):cNav(-1);});
+})();
+
+// ── LIGHTBOX INFOGRAPHIES ──
+(function(){
+  const slides = Array.from(document.querySelectorAll('#ct .project-card'));
+  const lb     = document.getElementById('lb');
+  let idx = 0;
+
+  function show(i){
+    idx = i;
+    const s   = slides[i];
+    const src = s.dataset.src || '';
+    document.getElementById('lb-title').textContent = s.dataset.title||'';
+    document.getElementById('lb-desc').textContent  = s.dataset.desc ||'';
+    document.getElementById('lb-count').textContent = (i+1)+' / '+slides.length;
+    const ph = document.getElementById('lb-placeholder');
+    ph.innerHTML = '';
+    if(src){
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = s.dataset.title||'';
+      img.style.cssText='max-width:82vw;max-height:75vh;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.08);display:block;object-fit:contain;';
+      ph.appendChild(img);
+    }
+    ph.style.cssText='display:flex;align-items:center;justify-content:center;';
+    document.getElementById('lb-prev').style.display = i===0?'none':'flex';
+    document.getElementById('lb-next').style.display = i===slides.length-1?'none':'flex';
+  }
+
+  window.lbOpen=function(i){
+    lb.classList.add('open');
+    document.body.style.overflow='hidden';
+    show(i);
+  };
+  window.lbClose=function(){
+    lb.classList.remove('open');
+    document.body.style.overflow='';
+  };
+  window.lbNav=function(d){ const n=idx+d; if(n>=0&&n<slides.length)show(n); };
+
+  lb.addEventListener('click',function(e){ if(e.target===lb)lbClose(); });
+  document.addEventListener('keydown',function(e){
+    if(!lb.classList.contains('open'))return;
+    if(e.key==='Escape')lbClose();
+    if(e.key==='ArrowLeft')lbNav(-1);
+    if(e.key==='ArrowRight')lbNav(1);
+  });
+})();
+
+</script>
+</body>
+</html>
